@@ -12,13 +12,13 @@ try:
         with open(LED_PATH, "w") as f:
             f.write("1")
         print("LED integrato: ACCESO")
-        time.sleep(1)
+        time.sleep(3)
 
         # Spegne il LED
         with open(LED_PATH, "w") as f:
             f.write("0")
         print("LED integrato: SPENTO")
-        time.sleep(1)
+        time.sleep(3)
 
 except KeyboardInterrupt:
     print("\nTest completato.")
