@@ -1,24 +1,28 @@
-from gpiozero import LED
-from time import sleep
+import time
 
-# Sul Raspberry Pi 3 A+ il LED verde integrato si chiama 'led0' (o 'ACT')
-led_verde = LED('led0')
+# Percorso di sistema del LED verde (ACT) su Raspberry Pi
+LED_PATH = "/sys/class/leds/ACT/brightness"
 
 print("=== TEST LED VERDE INTEGRATO ===")
 print("Premi CTRL + C per fermare lo script.")
 
 try:
     while True:
-        led_verde.on()       # Accende il LED verde del Raspberry
+        # Accende il LED
+        with open(LED_PATH, "w") as f:
+            f.write("1")
         print("LED integrato: ACCESO")
-        sleep(3)
-        
-        led_verde.off()      # Spegne il LED verde del Raspberry
+        time.sleep(1)
+
+        # Spegne il LED
+        with open(LED_PATH, "w") as f:
+            f.write("0")
         print("LED integrato: SPENTO")
-        sleep(3)
+        time.sleep(1)
 
 except KeyboardInterrupt:
     print("\nTest completato.")
-    # Ripristina il comportamento normale del LED (attività MicroSD)
-    led_verde.close()
+    # Spegne il LED all'uscita
+    with open(LED_PATH, "w") as f:
+        f.write("0")
 
