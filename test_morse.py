@@ -3,7 +3,6 @@ import time
 LED_PATH = "/sys/class/leds/ACT/brightness"
 
 def imposta_led(stato):
-    """Funzione per accendere (1) o spegnere (0) il LED"""
     with open(LED_PATH, "w") as f:
         f.write(str(stato))
 
@@ -21,25 +20,42 @@ def linea():
     imposta_led(0)
     time.sleep(0.3)
 
-print("=== TEST 2: CODICE MORSE (S.O.S.) ===")
-print("Inizio trasmissione... Press CTRL+C per fermare.")
+# Funzioni per le singole lettere di GIAN
+def lettera_G():
+    linea(); linea(); punto()
+
+def lettera_I():
+    punto(); punto()
+
+def lettera_A():
+    punto(); linea()
+
+def lettera_N():
+    linea(); punto()
+
+print("=== TEST CODICE MORSE: GIAN ===")
+print("Inizio trasmissione... Premi CTRL+C per fermare.")
 
 try:
     while True:
-        print("Invio 'S' (...)")
-        punto(); punto(); punto()
-        time.sleep(0.6)
+        print("Trasmetto 'G' (--.)")
+        lettera_G()
+        time.sleep(1.5)  # Pausa tra le lettere
 
-        print("Invio 'O' (---)")
-        linea(); linea(); linea()
-        time.sleep(0.6)
+        print("Trasmetto 'I' (..)")
+        lettera_I()
+        time.sleep(1.5)
 
-        print("Invio 'S' (...)")
-        punto(); punto(); punto()
+        print("Trasmetto 'A' (.-)")
+        lettera_A()
+        time.sleep(1.5)
 
-        print("--- Sequenza completata. Pausa di 2 secondi ---\n")
-        time.sleep(2)
+        print("Trasmetto 'N' (-.)")
+        lettera_N()
+
+        print("--- 'GIAN' trasmesso! Pausa di 3 secondi prima di ripetere ---\n")
+        time.sleep(3)
 
 except KeyboardInterrupt:
     imposta_led(0)
-    print("\nTrasmissione Morse interrotta.")
+    print("\nTrasmissione interrotta.")
